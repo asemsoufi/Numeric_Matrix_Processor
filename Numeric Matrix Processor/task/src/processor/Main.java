@@ -4,53 +4,81 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static int matrixAN, matrixAM, matrixBN, matrixBM;
-    private static int[][] matrixA;
-    private static int[][] matrixB;
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // getting first matrix
-        matrixAN = scanner.nextInt();
-        matrixAM = scanner.nextInt();
-        matrixA = getMatrix(matrixAN, matrixAM);
-        // getting second matrix
-        matrixBN = scanner.nextInt();
-        matrixBM = scanner.nextInt();
-        matrixB = getMatrix(matrixBN, matrixBM);
+        getUserSelection();
+    }
 
-        if (matrixAN != matrixBN || matrixAM != matrixBM) {
-            System.out.println("ERROR");
-        } else {
-            int[][] matrixSum = sumMatrices(matrixA, matrixB);
-            for (int i = 0; i < matrixAN; i++) {
-                for (int j = 0; j < matrixAM; j++) {
-                    System.out.print(matrixSum[i][j] + " ");
+    public static void getUserSelection() {
+        System.out.println("1. Add matrices");
+        System.out.println("2. Multiply matrix to a constant");
+        System.out.println("3. Multiply matrices");
+        System.out.println("4. Transpose matrix");
+        System.out.println("0. Exit");
+        System.out.print("Your choice: ");
+        Scanner scanner = new Scanner(System.in);
+        String selection = scanner.next();
+        switch (selection) {
+            case "1":
+                // get first matrix
+                Matrix matrix1 = Matrix.getNewMatrix();
+                // get second matrix
+                Matrix matrix2 = Matrix.getNewMatrix();
+                // calculate and print the multiplication of the two matrices
+                System.out.println("The addition result is:");
+                System.out.println(Matrix.sumMatrices(matrix1, matrix2));
+                getUserSelection();
+                break;
+            case "2":
+                Matrix matrix12 = Matrix.getNewMatrix();
+                // get a number to multiply with
+                double number = scanner.nextDouble();
+                // calculate and print the multiplication of the matrix by the number
+                System.out.println("The multiplication result is:");
+                System.out.println(Matrix.timesMatrix(matrix12, number));
+                getUserSelection();
+                break;
+            case "3":
+                Matrix matrix13 = Matrix.getNewMatrix();
+                // get second matrix
+                Matrix matrix23 = Matrix.getNewMatrix();
+                // calculate and print the multiplication of the two matrices
+                System.out.println("The multiplication result is:");
+                System.out.println(Matrix.multiplyMatrices(matrix13, matrix23));
+                getUserSelection();
+                break;
+            case "4":
+                switch (Matrix.getTranspositionChoice()) {
+                    case "1":
+                        Matrix originalMatrix1 = Matrix.getNewMatrix();
+                        System.out.println("The transposition relatively main diagonal result is:");
+                        System.out.println(Matrix.transposeDiagonal(originalMatrix1));
+                        getUserSelection();
+                        break;
+                    case "2":
+                        Matrix originalMatrix2 = Matrix.getNewMatrix();
+                        System.out.println("The transposition relatively side diagonal result is:");
+                        System.out.println(Matrix.transposeSideDiagonal(originalMatrix2));
+                        getUserSelection();
+                        break;
+                    case "3":
+                        Matrix originalMatrix3 = Matrix.getNewMatrix();
+                        System.out.println("The transposition by a vertical line result is:");
+                        System.out.println(Matrix.transposeVertical(originalMatrix3));
+                        getUserSelection();
+                        break;
+                    case "4":
+                        Matrix originalMatrix4 = Matrix.getNewMatrix();
+                        System.out.println("The transposition by a horizontal line result is:");
+                        System.out.println(Matrix.transposeHorizontal(originalMatrix4));
+                        getUserSelection();
+                        break;
+                    default:
+                        Matrix.getTranspositionChoice();
                 }
-                System.out.println();
-            }
+            case "0":
+                return;
+            default:
+                getUserSelection();
         }
-
-    }
-
-    public static int[][] getMatrix(int n, int m) {
-        Scanner scanner = new Scanner(System.in);
-        int[][] matrix = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                matrix[i][j] = scanner. nextInt();
-            }
-        }
-        return matrix;
-    }
-
-    public static int[][] sumMatrices(int[][] a, int[][] b) {
-        int[][] sum = new int[matrixAN][matrixAM];
-        for (int i = 0; i < matrixAN; i++) {
-            for (int j = 0; j < matrixAM; j++) {
-                sum[i][j] = matrixA[i][j] + matrixB[i][j];
-            }
-        }
-        return sum;
     }
 }
