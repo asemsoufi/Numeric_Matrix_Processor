@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Matrix {
 
-    public int n;
-    public int m;
-    public double[][] elements;
+    private int n;
+    private int m;
+    private double[][] elements;
 
     // constructor
     public Matrix(int n, int m) {
@@ -194,5 +194,29 @@ public class Matrix {
             matrixToStrin += "\n";
         }
         return matrixToStrin;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    public int getM() {
+        return m;
+    }
+
+    public void setM(int m) {
+        this.m = m;
+    }
+
+    public double[][] getElements() {
+        return elements;
+    }
+
+    public void setElements(double[][] elements) {
+        this.elements = elements;
     }
 }
