@@ -4,9 +4,10 @@ import java.util.Scanner;
 
 public class Matrix {
 
-    private int n;
-    private int m;
+    private final int n;
+    private final int m;
     private double[][] elements;
+    private double determinant;
 
     // constructor
     public Matrix(int n, int m) {
@@ -82,6 +83,32 @@ public class Matrix {
             temp[i] = elements[m - 1 - i][i];
         }
         return temp;
+    }
+
+    public double calculateDeterminant() {
+        if (n == 1) {
+            return elements[0][0];
+        }
+        if (n == 2) {
+            return elements[0][0] * elements[1][1] - elements[0][1] * elements[1][0];
+        }
+        for (int k = 0; k < n; k++) {
+            Matrix smallerMatrix = new Matrix(n - 1, n - 1);
+            int x = 0;
+            int y = 0;
+            for (int i = 1; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (j != k) {
+                        smallerMatrix.elements[x][y] = elements[i][j];
+                        y++;
+                    }
+                }
+                y = 0;
+                x++;
+            }
+            determinant += elements[0][k] * smallerMatrix.calculateDeterminant() * Math.pow(-1, k + 2);
+        }
+        return determinant;
     }
 
     public static Matrix sumMatrices(Matrix a, Matrix b) {
@@ -185,17 +212,103 @@ public class Matrix {
         return scanner.next();
     }
 
-    public String toString() {
-        String matrixToStrin = "";
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                matrixToStrin += String.format("%f ",elements[i][j]);
-            }
-            matrixToStrin += "\n";
+    public static void getUserSelection() {
+        System.out.println("1. Add matrices");
+        System.out.println("2. Multiply matrix to a constant");
+        System.out.println("3. Multiply matrices");
+        System.out.println("4. Transpose matrix");
+        System.out.println("5. Calculate a determinant");
+        System.out.println("0. Exit");
+        System.out.print("Your choice: ");
+        Scanner scanner = new Scanner(System.in);
+        String selection = scanner.next();
+        switch (selection) {
+            case "1":
+                // get first matrix
+                Matrix matrix1 = Matrix.getNewMatrix();
+                // get second matrix
+                Matrix matrix2 = Matrix.getNewMatrix();
+                // calculate and print the multiplication of the two matrices
+                System.out.println("The addition result is:");
+                System.out.println(Matrix.sumMatrices(matrix1, matrix2));
+                getUserSelection();
+                break;
+            case "2":
+                Matrix matrix12 = Matrix.getNewMatrix();
+                // get a number to multiply with
+                double number = scanner.nextDouble();
+                // calculate and print the multiplication of the matrix by the number
+                System.out.println("The multiplication result is:");
+                System.out.println(Matrix.timesMatrix(matrix12, number));
+                getUserSelection();
+                break;
+            case "3":
+                Matrix matrix13 = Matrix.getNewMatrix();
+                // get second matrix
+                Matrix matrix23 = Matrix.getNewMatrix();
+                // calculate and print the multiplication of the two matrices
+                System.out.println("The multiplication result is:");
+                System.out.println(Matrix.multiplyMatrices(matrix13, matrix23));
+                getUserSelection();
+                break;
+            case "4":
+                switch (Matrix.getTranspositionChoice()) {
+                    case "1":
+                        Matrix originalMatrix1 = Matrix.getNewMatrix();
+                        System.out.println("The transposition relatively main diagonal result is:");
+                        System.out.println(Matrix.transposeDiagonal(originalMatrix1));
+                        Matrix.getTranspositionChoice();
+                        break;
+                    case "2":
+                        Matrix originalMatrix2 = Matrix.getNewMatrix();
+                        System.out.println("The transposition relatively side diagonal result is:");
+                        System.out.println(Matrix.transposeSideDiagonal(originalMatrix2));
+                        Matrix.getTranspositionChoice();
+                        break;
+                    case "3":
+                        Matrix originalMatrix3 = Matrix.getNewMatrix();
+                        System.out.println("The transposition by a vertical line result is:");
+                        System.out.println(Matrix.transposeVertical(originalMatrix3));
+                        Matrix.getTranspositionChoice();
+                        break;
+                    case "4":
+                        Matrix originalMatrix4 = Matrix.getNewMatrix();
+                        System.out.println("The transposition by a horizontal line result is:");
+                        System.out.println(Matrix.transposeHorizontal(originalMatrix4));
+                        Matrix.getTranspositionChoice();
+                        break;
+                    default:
+                        getUserSelection();
+                }
+                break;
+            case "5":
+                // get first matrix
+                Matrix matrix15 = Matrix.getNewMatrix();
+                // calculate and print the multiplication of the two matrices
+                System.out.println("The determinant is:");
+                System.out.println(matrix15.calculateDeterminant());
+                getUserSelection();
+                break;
+            case "0":
+                return;
+            default:
+                getUserSelection();
         }
-        return matrixToStrin;
     }
 
+
+
+    public String toString() {
+        String matrixToString = "";
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                matrixToString += String.format("%f ",elements[i][j]);
+            }
+            matrixToString += "\n";
+        }
+        return matrixToString;
+    }
+/*
     public int getN() {
         return n;
     }
@@ -219,4 +332,6 @@ public class Matrix {
     public void setElements(double[][] elements) {
         this.elements = elements;
     }
+
+ */
 }
