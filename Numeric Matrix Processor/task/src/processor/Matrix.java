@@ -13,13 +13,13 @@ public class Matrix {
     public Matrix(int n, int m) {
         this.n = n;
         this.m = m;
-        // initiate all elements to 0.0
         this.elements = new double[n][m];
+        /* initiate all elements to 0.0
         for (int i = 0; i < this.n; i++) {
             for (int j = 0; j < this.m; j++) {
                 this.elements[i][j] = 0.0;
             }
-        }
+        }*/
     }
 
     public void setElements() {
@@ -85,7 +85,7 @@ public class Matrix {
         return temp;
     }
 
-    public double calculateDeterminant() {
+    public double getDeterminant() {
         if (n == 1) {
             return elements[0][0];
         }
@@ -93,22 +93,40 @@ public class Matrix {
             return elements[0][0] * elements[1][1] - elements[0][1] * elements[1][0];
         }
         for (int k = 0; k < n; k++) {
-            Matrix smallerMatrix = new Matrix(n - 1, n - 1);
-            int x = 0;
-            int y = 0;
-            for (int i = 1; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    if (j != k) {
-                        smallerMatrix.elements[x][y] = elements[i][j];
-                        y++;
-                    }
-                }
-                y = 0;
-                x++;
-            }
-            determinant += elements[0][k] * smallerMatrix.calculateDeterminant() * Math.pow(-1, k + 2);
+            determinant += elements[0][k] * this.getCofactor(1, k + 1);
         }
         return determinant;
+    }
+
+    public double getCofactor(int k, int l) {
+        Matrix smallerMatrix = new Matrix(n - 1, n - 1);
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i != k - 1 && j != l - 1) {
+                    smallerMatrix.elements[x][y] = elements[i][j];
+                    y++;
+                }
+            }
+            if (y > 0) {
+                x++;
+            }
+            y = 0;
+        }
+        return Math.pow(-1, k + l) * smallerMatrix.getDeterminant();
+    }
+
+    public static Matrix identityMatrix(int n, int m) {
+        Matrix temp = new Matrix(n, m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == j) {
+                    temp.elements[i][j] = 1.0;
+                }
+            }
+        }
+        return temp;
     }
 
     public static Matrix sumMatrices(Matrix a, Matrix b) {
@@ -286,7 +304,7 @@ public class Matrix {
                 Matrix matrix15 = Matrix.getNewMatrix();
                 // calculate and print the multiplication of the two matrices
                 System.out.println("The determinant is:");
-                System.out.println(matrix15.calculateDeterminant());
+                System.out.println(matrix15.getDeterminant());
                 getUserSelection();
                 break;
             case "0":
