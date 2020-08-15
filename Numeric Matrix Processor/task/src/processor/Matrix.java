@@ -129,6 +129,24 @@ public class Matrix {
         return temp;
     }
 
+    public Matrix cofactorsMatrix() {
+        Matrix temp = new Matrix(n, m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                temp.elements[i][j] = getCofactor(i + 1, j + 1);
+            }
+        }
+        return temp;
+    }
+
+    public Matrix adjacencyMatrix() {
+        return transposeDiagonal(this);
+    }
+
+    public Matrix inverseMatrix() {
+        return timesMatrix(this.cofactorsMatrix().adjacencyMatrix(), 1 / this.getDeterminant());
+    }
+
     public static Matrix sumMatrices(Matrix a, Matrix b) {
         if (a.n != b.n || a.m != b.m) {
             System.out.println("The two matrices can't be summed-up!");
@@ -236,6 +254,7 @@ public class Matrix {
         System.out.println("3. Multiply matrices");
         System.out.println("4. Transpose matrix");
         System.out.println("5. Calculate a determinant");
+        System.out.println("6. Inverse matrix");
         System.out.println("0. Exit");
         System.out.print("Your choice: ");
         Scanner scanner = new Scanner(System.in);
@@ -271,6 +290,9 @@ public class Matrix {
                 break;
             case "4":
                 switch (Matrix.getTranspositionChoice()) {
+                    case "0":
+                        getUserSelection();
+                        break;
                     case "1":
                         Matrix originalMatrix1 = Matrix.getNewMatrix();
                         System.out.println("The transposition relatively main diagonal result is:");
@@ -296,7 +318,7 @@ public class Matrix {
                         Matrix.getTranspositionChoice();
                         break;
                     default:
-                        getUserSelection();
+                        Matrix.getTranspositionChoice();
                 }
                 break;
             case "5":
@@ -305,6 +327,14 @@ public class Matrix {
                 // calculate and print the multiplication of the two matrices
                 System.out.println("The determinant is:");
                 System.out.println(matrix15.getDeterminant());
+                getUserSelection();
+                break;
+            case "6":
+                // get original matrix
+                Matrix matrix16 = Matrix.getNewMatrix();
+                // get and print inverse matrix
+                System.out.println(matrix16.inverseMatrix());
+                // get next user selection
                 getUserSelection();
                 break;
             case "0":
