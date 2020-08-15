@@ -237,7 +237,7 @@ public class Matrix {
         return tempMatrix;
     }
 
-    public static String getTranspositionChoice() {
+    public static void getTranspositionChoice() {
         System.out.println("1. Main diagonal\n" +
                 "2. Side diagonal\n" +
                 "3. Vertical line\n" +
@@ -245,7 +245,35 @@ public class Matrix {
                 "0. Back to main menu\n");
         System.out.print("Your choice: ");
         Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+        String transpositionChoice = scanner.next();
+        switch (transpositionChoice) {
+            case "1":
+                Matrix originalMatrix1 = Matrix.getNewMatrix();
+                System.out.println("The transposition relatively main diagonal result is:");
+                System.out.println(Matrix.transposeDiagonal(originalMatrix1));
+                getTranspositionChoice();
+                break;
+            case "2":
+                Matrix originalMatrix2 = Matrix.getNewMatrix();
+                System.out.println("The transposition relatively side diagonal result is:");
+                System.out.println(Matrix.transposeSideDiagonal(originalMatrix2));
+                getTranspositionChoice();
+                break;
+            case "3":
+                Matrix originalMatrix3 = Matrix.getNewMatrix();
+                System.out.println("The transposition by a vertical line result is:");
+                System.out.println(Matrix.transposeVertical(originalMatrix3));
+                getTranspositionChoice();
+                break;
+            case "4":
+                Matrix originalMatrix4 = Matrix.getNewMatrix();
+                System.out.println("The transposition by a horizontal line result is:");
+                System.out.println(Matrix.transposeHorizontal(originalMatrix4));
+                getTranspositionChoice();
+                break;
+            default:
+                getUserSelection();
+        }
     }
 
     public static void getUserSelection() {
@@ -289,37 +317,7 @@ public class Matrix {
                 getUserSelection();
                 break;
             case "4":
-                switch (Matrix.getTranspositionChoice()) {
-                    case "0":
-                        getUserSelection();
-                        break;
-                    case "1":
-                        Matrix originalMatrix1 = Matrix.getNewMatrix();
-                        System.out.println("The transposition relatively main diagonal result is:");
-                        System.out.println(Matrix.transposeDiagonal(originalMatrix1));
-                        Matrix.getTranspositionChoice();
-                        break;
-                    case "2":
-                        Matrix originalMatrix2 = Matrix.getNewMatrix();
-                        System.out.println("The transposition relatively side diagonal result is:");
-                        System.out.println(Matrix.transposeSideDiagonal(originalMatrix2));
-                        Matrix.getTranspositionChoice();
-                        break;
-                    case "3":
-                        Matrix originalMatrix3 = Matrix.getNewMatrix();
-                        System.out.println("The transposition by a vertical line result is:");
-                        System.out.println(Matrix.transposeVertical(originalMatrix3));
-                        Matrix.getTranspositionChoice();
-                        break;
-                    case "4":
-                        Matrix originalMatrix4 = Matrix.getNewMatrix();
-                        System.out.println("The transposition by a horizontal line result is:");
-                        System.out.println(Matrix.transposeHorizontal(originalMatrix4));
-                        Matrix.getTranspositionChoice();
-                        break;
-                    default:
-                        Matrix.getTranspositionChoice();
-                }
+                Matrix.getTranspositionChoice();
                 break;
             case "5":
                 // get first matrix
