@@ -251,25 +251,25 @@ public class Matrix {
                 Matrix originalMatrix1 = Matrix.getNewMatrix();
                 System.out.println("The transposition relatively main diagonal result is:");
                 System.out.println(Matrix.transposeDiagonal(originalMatrix1));
-                getTranspositionChoice();
+                getUserSelection();
                 break;
             case "2":
                 Matrix originalMatrix2 = Matrix.getNewMatrix();
                 System.out.println("The transposition relatively side diagonal result is:");
                 System.out.println(Matrix.transposeSideDiagonal(originalMatrix2));
-                getTranspositionChoice();
+                getUserSelection();
                 break;
             case "3":
                 Matrix originalMatrix3 = Matrix.getNewMatrix();
                 System.out.println("The transposition by a vertical line result is:");
                 System.out.println(Matrix.transposeVertical(originalMatrix3));
-                getTranspositionChoice();
+                getUserSelection();
                 break;
             case "4":
                 Matrix originalMatrix4 = Matrix.getNewMatrix();
                 System.out.println("The transposition by a horizontal line result is:");
                 System.out.println(Matrix.transposeHorizontal(originalMatrix4));
-                getTranspositionChoice();
+                getUserSelection();
                 break;
             default:
                 getUserSelection();
